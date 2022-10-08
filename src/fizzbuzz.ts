@@ -17,11 +17,22 @@ export default class FizzBuzz {
     return (num + '').includes('5')
   }
 
+  isFizzBuzz(num: number) {
+    return (this.isDivisibleBy3(num) && this.isDivisibleBy5(num)) || (this.numContains3(num) && this.numContains5(num))
+  }
+
+  isFizz(num: number) {
+    return this.isDivisibleBy3(num) || this.numContains3(num)
+  }
+
+  isBuzz(num: number) {
+    return this.isDivisibleBy5(num) || this.numContains5(num)
+  }
+
   getResponse(num: number): string | number {
-    if ((this.isDivisibleBy3(num) && this.isDivisibleBy5(num)) || (this.numContains3(num) && this.numContains5(num)))
-      return this.Results[2]
-    if (this.isDivisibleBy3(num) || this.numContains3(num)) return this.Results[0]
-    if (this.isDivisibleBy5(num) || this.numContains5(num)) return this.Results[1]
+    if (this.isFizzBuzz(num)) return this.Results[2]
+    if (this.isFizz(num)) return this.Results[0]
+    if (this.isBuzz(num)) return this.Results[1]
     return num
   }
 }
