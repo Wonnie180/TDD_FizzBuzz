@@ -5,7 +5,7 @@ describe('FizzBuzz', () => {
   const cases_expectedResults = ['Fizz', 'Buzz', 'FizzBuzz']
 
   const cases_base = [1, 2, 4, 7, 8, 11, 14]
-  test.each(cases_base)('given %p returns %p', firstArg => {
+  test.each(cases_base)('given %p returns itself', firstArg => {
     const result = fizzBuzz.getResponse(firstArg)
     expect(result).toEqual(firstArg)
   })
