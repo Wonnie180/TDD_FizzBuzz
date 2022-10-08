@@ -10,20 +10,20 @@ describe('FizzBuzz', () => {
     expect(result).toEqual(firstArg)
   })
 
-  const cases_3 = [3, 6, 9, 12]
-  test.each(cases_3)(`given %p returns ${cases_expectedResults[0]}`, firstArg => {
+  const cases_divisible_by_3 = [3, 6, 9, 12]
+  test.each(cases_divisible_by_3)(`given %p returns ${cases_expectedResults[0]}`, firstArg => {
     const result = fizzBuzz.getResponse(firstArg)
     expect(result).toEqual(cases_expectedResults[0])
   })
 
-  const cases_5 = [5, 10, 20, 25]
-  test.each(cases_5)(`given %p returns ${cases_expectedResults[1]}`, firstArg => {
+  const cases_divisible_by_5 = [5, 10, 20, 25]
+  test.each(cases_divisible_by_5)(`given %p returns ${cases_expectedResults[1]}`, firstArg => {
     const result = fizzBuzz.getResponse(firstArg)
     expect(result).toEqual(cases_expectedResults[1])
   })
 
-  const cases_3_and_5 = [15, 30, 45, 60, 75, 90]
-  test.each(cases_3_and_5)(`given %p returns ${cases_expectedResults[2]}`, firstArg => {
+  const cases_divisible_by_3_and_5 = [15, 30, 45, 60, 75, 90]
+  test.each(cases_divisible_by_3_and_5)(`given %p returns ${cases_expectedResults[2]}`, firstArg => {
     const result = fizzBuzz.getResponse(firstArg)
     expect(result).toEqual(cases_expectedResults[2])
   })
