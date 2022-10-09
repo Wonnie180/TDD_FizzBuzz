@@ -66,24 +66,65 @@ describe('FizzBuzz', () => {
 
   const cases_base_3_numbers_custom_separator: [string, number][] = [
     ['//;\n1;2', 3],
-    ['//;;;;\n1;;;;2', 3],
-    ['//;!-_=\n1;!-_=2', 3],
-    ['//;\n1;2;3', 6],
-    ['//@#\n1@#2@#4', 7]
+    ['//[\n1[2', 3],
+    ['//!\n1!2', 3],
+    ['//_\n1_2_3', 6],
+    ['//@\n1@2@4', 7],
+    ['//*\n1*2', 3],
+    ['//(\n1(2', 3],
+    ['//.\n1.2', 3],
+    ['//?\n1?2', 3],
+    ['//+\n1+2', 3],
+    ['///\n1/2', 3],
+    ['//-\n1-2', 3],
+    ['//{\n1{2', 3],
+    ['//]\n1]2', 3],
   ]
   test.each(cases_base_3_numbers_custom_separator)('given %p returns %p', (firstArg, expectedResult) => {
     const result = stringCalculator.Add(firstArg)
     expect(result).toEqual(expectedResult)
   })
 
-  const excepcionDescription = 'negativos no soportados'
+  const excepcionDescription = 'negativos no soportados: '
   const cases_base_2_negative_numbers: [string, string][] = [
-    ['-1,2', excepcionDescription]
-    // ['3,-4', excepcionDescription+" -4"]
+    ['-1,2', excepcionDescription+"-1"],
+    ['3,-4', excepcionDescription+"-4"],
+    ['-3,-4', excepcionDescription+"-3,-4"]
   ]
   test.each(cases_base_2_negative_numbers)('given %p returns %p', (firstArg, expectedResult) => {
     expect(() => {
       return stringCalculator.Add(firstArg)
     }).toThrow(expectedResult)
   })
+
+  const cases_numbers_bigger_than_1000_should_be_ignored: [string, number][] = [
+    ['1,1001', 1],
+    ['1001,1002', 0],
+    ['1,2\n3,1001',6]
+  ]
+  test.each(cases_numbers_bigger_than_1000_should_be_ignored)('given %p returns %p', (firstArg, expectedResult) => {
+    const result = stringCalculator.Add(firstArg)
+    expect(result).toEqual(expectedResult)
+  })
+
+  const cases_custom_delimiter_has_more_than_1_character: [string, number][] = [
+    ['//[,,,]\n1,,,2,,,3', 6],
+    ['//[,;]\n1,;2,;3', 6],
+    ['//[***]\n1***2***3',6],
+  ]
+  test.each(cases_custom_delimiter_has_more_than_1_character)('given %p returns %p', (firstArg, expectedResult) => {
+    const result = stringCalculator.Add(firstArg)
+    expect(result).toEqual(expectedResult)
+  })
+
+  const cases_more_than_1_custom_delimiter: [string, number][] = [
+    ['//[;][%]\n1;2%3', 6],
+    // ['//[,;]\n1,;2,;3', 6],
+    // ['//[***]\n1***2***3',6],
+  ]
+  test.each(cases_more_than_1_custom_delimiter)('given %p returns %p', (firstArg, expectedResult) => {
+    const result = stringCalculator.Add(firstArg)
+    expect(result).toEqual(expectedResult)
+  })
+
 })
