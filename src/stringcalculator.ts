@@ -11,12 +11,13 @@ export default class StringCalculator {
   //-- Errors --
   errorNegativeNumbersDescription = 'negativos no soportados: '
   errorMalformedCustomSeparatorDescription = 'El separador personalizado está mal formado.'
-
+  errorInvalidCustomDeclaration = 'La declaración del separador personalizado esta mal formada.'
   //-- Functions/Methods --
 
   //- Main Functions/Methods -
   Add(numbersInString_input: string) {
     if (this.haveCustomDelimiter(numbersInString_input)) {
+      if (!this.isValidCustomDelimiter(numbersInString_input)) return this.throwInvalidCustomDeclarationError()
       this.addCustomSeparatorToSeparators(numbersInString_input)
       numbersInString_input = this.removeCustomSeparatorDeclarationFromString(numbersInString_input)
     }
@@ -111,10 +112,31 @@ export default class StringCalculator {
 
   //-- Have... --
   haveCustomDelimiter(numbers: string) {
-    return numbers.startsWith(this.customSeparatorDeclarationBegin)
+    return (
+      numbers.length > 0 &&
+      !(this.isNumber(numbers[0]) || this.isMathPrefix(numbers[0]) || this.isAllowedDefaultSeparator(numbers[0]))
+    )
   }
 
   //-- Is... --
+  isMathPrefix(character: string) {
+    return character === '-' || character === '+'
+  }
+
+  isNumber(character: string) {
+    return character >= '0' && character <= '9'
+  }
+
+  isAllowedDefaultSeparator(character: string) {
+    return character === this.defaultSeparator || character === this.validSeparators[0]
+  }
+
+  isValidCustomDelimiter(numbers: string) {
+    return (
+      numbers.startsWith(this.customSeparatorDeclarationBegin) && numbers.includes(this.customSeparatorDeclarationEnd)
+    )
+  }
+
   isEmpty(numbers: number[]) {
     return numbers.length < 1 || isNaN(numbers[0])
   }
@@ -219,5 +241,9 @@ export default class StringCalculator {
   throwNegativeNumbersError(numbers: number[]) {
     const negativeNumbers = this.obtainNegativeNumbers(numbers)
     throw new Error(this.errorNegativeNumbersDescription + negativeNumbers)
+  }
+
+  throwInvalidCustomDeclarationError() {
+    throw new Error(this.errorInvalidCustomDeclaration)
   }
 }
